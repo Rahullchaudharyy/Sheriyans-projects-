@@ -6,7 +6,9 @@
     --dsalmon :rgb(124, 60, 53);
     --dcyan: rgb(47, 125, 125) ;
 }
- 
+ body{
+    transition: background-color ease-out .5s;
+ }
 *::selection{
     background-color:#EF9D71;
 }
