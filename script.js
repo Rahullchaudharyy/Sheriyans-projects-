@@ -27,9 +27,9 @@ imgelem.forEach((link ,index)=> {
     link.innerHTML = `<img class="w-full h-full object-cover" src="${allImageLinks[index].img}"alt="">`;
 })
 
-theAvatar.forEach(function(ing,index){
-    ing.innerHTML = `<img class ="h-full w-full" src="${allImageLinks[index].img}" alt="">`
-})
+// theAvatar.forEach(function(ing,index){
+//     ing.innerHTML = `<img class ="h-full w-full" src="${allImageLinks[index].img}" alt="">`
+// })
 
 function HomePage(){
     gsap.set(".slider", {scale: 5})
@@ -76,18 +76,59 @@ function RealAnimation (){
         ease:Power2
     })
 }
-function TeamAnimation(){
-    document.querySelectorAll('.listitem')
-.forEach(function(el){
-    el.addEventListener('mousemove',function(dets){
-        // gsap.utils.mapRange(0,window.innerWidth , -200,200, dets.clientX)
-        gsap.to(this.querySelector('.avtar'),{opacity:1,x: gsap.utils.mapRange(0,window.innerWidth , -200,200, dets.clientX),ease:Power4,duration:.5})
-    })
-    el.addEventListener('mouseleave',function(dets){
-        gsap.to(this.querySelector('.avtar'),{opacity:0,ease:Power4,duration:.5})
-    })
-})
+// function TeamAnimation(){
+//     document.querySelectorAll('.listitem')
+// .forEach(function(el){
+//     el.addEventListener('mousemove',function(dets){
+//         // gsap.utils.mapRange(0,window.innerWidth , -200,200, dets.clientX)
+//         gsap.to(this.querySelector('.avtar'),{opacity:1,x: gsap.utils.mapRange(0,window.innerWidth , -200,200, dets.clientX),ease:Power4,duration:.5})
+//     })
+//     el.addEventListener('mouseleave',function(dets){
+//         gsap.to(this.querySelector('.avtar'),{opacity:0,ease:Power4,duration:.5})
+//     })
+// })
+// }
+function TeamAnimation() {
+    document.querySelectorAll('.listitem').forEach(function(el) {
+        el.addEventListener('mousemove', function(dets) {
+            // Calculate the new height based on mouse position
+            var newHeight = (dets.clientY / window.innerHeight) * 100;
+            // Update the height of all .bluelayer divs
+            document.querySelectorAll('.bluelayer').forEach(function(bluelayer) {
+                bluelayer.style.height = newHeight + '%';
+            });
+            
+            gsap.to(this.querySelector('.avtar'), {
+                opacity: 1,
+                x: gsap.utils.mapRange(0, window.innerWidth, -200, 200, dets.clientX),
+                ease: Power4,
+                duration: 0.5
+            });
+        });
+        el.addEventListener('mouseleave', function(dets) {
+            // Reset the height of all .bluelayer divs when mouse leaves
+            document.querySelectorAll('.bluelayer').forEach(function(bluelayer) {
+                bluelayer.style.height = '0%';
+            });
+            
+            gsap.to(this.querySelector('.avtar'), {
+                opacity: 0,
+                ease: Power4,
+                duration: 0.5
+            });
+        });
+    });
 }
+
+// Call the function to initialize the animation
+TeamAnimation();
+
+
+// Call the function to initialize the animation
+TeamAnimation();
+
+
+
 function capsuleAnime(){
     gsap.to(".capsule:nth-child(2)",{
         scrollTrigger:{
@@ -139,7 +180,7 @@ function color(){
         ScrollTrigger.create({
             trigger:e,
             start:"top 50%",
-            bottom: "bottom 50%",
+            end: "bottom 50%",
             markers:false,
             onEnter:function(){
      document.body.setAttribute("theme",e.dataset.color)
